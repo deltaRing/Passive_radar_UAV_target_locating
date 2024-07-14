@@ -1,0 +1,27 @@
+% 通过多角度定位结果以及多雷达定位结果实现
+% 输入1：雷达目标
+% 输入2：定位结果
+%
+function Targets = LocateTarget(Radars, Angles)
+    % 目标位置
+    Targets = [];
+
+    for rr = 1:length(Radars)
+        Pos_r = Radars{rr}.Pos; % 接收天线1
+        for rrr = rr:length(Radars)
+            if rr == rrr, continue; end
+            Pos_rr = Radars{rr}.Pos; % 接收天线2
+            
+            %% 射线
+            for tt = 1:length(Angles{rr})
+                angle1 = Angles{rr}(:, tt);
+                for ttt = 1:length(Angles{rrr})
+                    angle2 = Angles{rrr}(:, ttt);
+                    
+                    %% 求解交点 定位结果
+                    
+                end
+            end
+        end
+    end
+end
