@@ -7,19 +7,19 @@ addpath ./Initialize
 addpath ./SignalGenerate
 addpath ./AngleAlgorithm
 
-radarLoc = [1000 1000 0;
-            -1000 1000 0;
-            1000 -1000 0;
-            -1000 -1000 0;
+radarLoc = [0 0 0;
+            -3000 -6000 0;
+            2000 -3000 0;
+            -3000 6000 0;
             ]; % 雷达位置
 ID = [0 1 2 3];
-M = [25 25 25 25];
-r0 = [0.625 0.625 0.625 0.625]; 
-targetLoc   = [-900 900 500;
-               900 900 1000]; 
+M = [64 64 64 64];
+r0 = [0.2586 0.2586 0.2586 0.2586]; 
+targetLoc   = [3000 0 2000;
+               -6000 -3000 5000;]; 
 targetVel   = [5 5 0;
                 5 5 0];
-targetID    = [0 0];
+targetID    = [0 1];
 angleAzAxis = linspace(pi, -pi, 360);
 angleElAxis = linspace(0, pi / 2, 90);
 
@@ -31,11 +31,12 @@ end
 for tt = 1:length(targetID)
     target{tt} = TargetInitialize(targetLoc(tt, :), targetVel(tt, :), targetID(tt));
 end
-signal = CosCircleGenerate(radar, target, 2.4e9, 1e-10, 1e3, 3);
-
+signal = CosCircleGenerate(radar, target, 5.8e9, 1e-1, 1e3, 3);
+% signal = BPSKCircleGenerate(radar, target, 5.8e9, 'rand', 1e6, 1e-7, 1e11, 3);
+% signal   = QPSKCircleGenerate(radar, target, 5.8e9, 'rand', 1e6, 1e-7, 1e11, 3);
 for rr = 1:length(radar)
 %     angle  = MUSIC(signal{rr}, 3, 360, 90, 2.4e9, radar{rr}.r0);
-    angle  = MVDR(signal{rr}, 360, 90, 2.4e9, radar{rr}.r0);
+    angle  = MVDR(signal{rr}, 360, 90, 5.8e9, radar{rr}.r0);
 
     figure(10000)
     title('MUSIC估计结果')
@@ -46,9 +47,16 @@ for rr = 1:length(radar)
     EstimatedAngle{rr} = AngleInfoExtract(flip(angle), angleAzAxis, angleElAxis);
 end
 
-Targets         = LocateTarget(radar, EstimatedAngle);
-Targets_cluster = DBSCAN(Targets, 50, 10);
+Targets         = LocateTarget_using_RangeInfo(radar, EstimatedAngle);
+Targets_cluster = DBSCAN(Targets, 500, 3);
 TargetNums      = unique(Targets_cluster(:, 4));
+
+Targets         = [];
+for tt = 1:length(TargetNums)
+   index = find(Targets_cluster(:, 4) == TargetNums(tt));
+   Target = Targets_cluster(index, 1:3);
+   Targets = [Targets; mean(Target, 1)];
+end
 
 
 figure(10001)

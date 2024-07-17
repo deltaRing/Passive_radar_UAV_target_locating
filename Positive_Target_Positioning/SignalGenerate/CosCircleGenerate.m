@@ -47,7 +47,7 @@ function Signal = CosCircleGenerate(radar, target, f0, ...
         % 时间
         dt       = linspace(1, t, sampleNum);
         % 信号生成
-        S = exp(1j * f0 * pi * dt);
+        S = exp(1j * f0 * 2 * pi * dt);
         S = repmat(S, [length(target), 1]);
         X = A * S;
         

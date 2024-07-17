@@ -7,7 +7,7 @@ function Angles = AngleInfoExtract(angleInfo, angleAzAxis, angleElAxis, ...
                     ratio, weight_enable)
     if nargin == 3
         ratio = 0.95;
-        weight_enable = 0;
+        weight_enable = 1;
     end
     Angles = []; 
     % 首先估计最大值与最小值的区别
