@@ -1,0 +1,9 @@
+﻿  main.c
+C:\Users\E1ysium\Desktop\114514\VSIPL\VSIPL_test\algorithm\MVDR.h(26,20): warning C4305: “初始化”: 从“double”到“const float”截断
+C:\Users\E1ysium\Desktop\114514\VSIPL\VSIPL_test\algorithm\MVDR.h(64,45): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+C:\Users\E1ysium\Desktop\114514\VSIPL\VSIPL_test\algorithm\MVDR.h(66,6): warning C4244: “初始化”: 从“double”转换到“vsip_scalar_f”，可能丢失数据
+C:\Users\E1ysium\Desktop\114514\VSIPL\VSIPL_test\algorithm\MVDR.h(67,6): warning C4244: “初始化”: 从“double”转换到“vsip_scalar_f”，可能丢失数据
+C:\Users\E1ysium\Desktop\114514\VSIPL\VSIPL_test\main.c(40,22): warning C4133: “函数”: 从“vsip_cmview_f *”到“vsip_cmview_d *”的类型不兼容
+C:\Users\E1ysium\Desktop\114514\VSIPL\VSIPL_test\main.c(41,22): warning C4133: “函数”: 从“vsip_cmview_f *”到“vsip_cmview_d *”的类型不兼容
+C:\Users\E1ysium\Desktop\114514\VSIPL\VSIPL_test\main.c(11,13): warning C4305: “初始化”: 从“double”到“float”截断
+  VSIPL_test.vcxproj -> C:\Users\E1ysium\Desktop\114514\VSIPL\VSIPL_test\x64\Debug\VSIPL_test.exe
