@@ -13,7 +13,7 @@ function Angles = AngleInfoExtract(angleInfo, angleAzAxis, angleElAxis, ...
     % 首先估计最大值与最小值的区别
     maxValue  = max(max(abs(angleInfo)));
     meanValue = mean(mean(abs(angleInfo)));
-    if meanValue * 1.25 >= maxValue, return; end % 没有合适的目标
+    if meanValue * 1.1 >= maxValue, return; end % 没有合适的目标
     [index_x, index_y] = find(abs(angleInfo) > maxValue * ratio);
     
     TempAngles = [angleAzAxis(index_x); angleElAxis(index_y)];
@@ -33,6 +33,6 @@ function Angles = AngleInfoExtract(angleInfo, angleAzAxis, angleElAxis, ...
         else
             angle  = tempangles;
         end
-        Angles     = [Angles angle];
+        Angles     = [Angles [angle; mean(Values)]];
     end
 end

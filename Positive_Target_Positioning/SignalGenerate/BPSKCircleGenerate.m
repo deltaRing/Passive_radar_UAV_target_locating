@@ -66,7 +66,7 @@ function Signal = BPSKCircleGenerate(radar, target, f0, code, B, ...
         S = cos(f0 * 2 * pi * t) .* cos(B * 2 * pi * t + pi * code);
         
         % 与本征信号进行相乘
-        S = S .* cos(f0 * 2 * pi * t);
+        S = S .* cos(f0 * 2 * pi * t + randn());
         
         filt = fir1(32, (2 * B) / (3 * fs), 'low');
         S = filter(filt, 1, S);
@@ -75,6 +75,7 @@ function Signal = BPSKCircleGenerate(radar, target, f0, code, B, ...
         filt = fir1(32, 1e-100, 'low');
         S = filter(filt, 1, S); % 这里需要进一步设置参数
 
+%         figure(114514)
 %         plot(S)
 %         hold on
 %         plot(code)

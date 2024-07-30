@@ -72,7 +72,7 @@ function Signal = QPSKCircleGenerate(radar, target, f0, code, B, ...
         S = cos(f0 * 2 * pi * t) .* cos(B * 2 * pi * t + phase(code));
         
         % 与本征信号进行相乘
-        S = S .* cos(f0 * 2 * pi * t);
+        S = S .* cos(f0 * 2 * pi * t + randn());
         
         filt = fir1(32, (2 * B) / (3 * fs), 'low');
         S = filter(filt, 1, S);
@@ -81,10 +81,11 @@ function Signal = QPSKCircleGenerate(radar, target, f0, code, B, ...
         filt = fir1(32, 1e-100, 'low');
         S = filter(filt, 1, S); % 这里需要进一步设置参数
 
-%         code = gray(code);
-%         plot(S)
-%         hold on
-%         plot((code - 2.5) / 4.0)
+        figure(114514)
+        code = gray(code);
+        plot(S)
+        hold on
+        plot((code - 2.5) / 4.0)
         
         S = repmat(S, [length(target), 1]);
         X = A * S;

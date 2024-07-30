@@ -15,9 +15,9 @@ function TargetPos = LocateTarget_using_RangeInfo(Radars, Angles)
             thetaR2 = atan2(Pos_r(2) - Pos_rr(2), Pos_r(1) - Pos_rr(1));
             
             %% 射线
-            for tt = 1:length(Angles{rr})
+            for tt = 1:size(Angles{rr}, 2)
                 angle1 = Angles{rr}(:, tt);
-                for ttt = 1:length(Angles{rrr})
+                for ttt = 1:size(Angles{rrr}, 2)
                     angle2 = Angles{rrr}(:, ttt);
                     %% 求解交点 定位结果
                     

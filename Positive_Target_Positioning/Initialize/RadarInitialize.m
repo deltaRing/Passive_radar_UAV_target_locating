@@ -8,9 +8,10 @@
 % （可选）输入7： 发射天线增益
 % （可选）输入8： 雷达发射功率
 % （可选）输入9： 雷达类型 （if 1 主动雷达 2 无源雷达）
-function radar = RadarInitialize(Pos, id, M, r0, ...
-                        PosTx, Gt, Gr, Pt, Type)
-    if nargin == 4
+function radar = RadarInitialize(Pos, id, M, r0, Vel, ...
+                        t, PosTx, Gt, Gr, Pt, Type)
+    if nargin == 5
+        t = 0.1;
         PosTx = Pos;
         Gt    = 10;
         Gr    = 1;
@@ -18,10 +19,22 @@ function radar = RadarInitialize(Pos, id, M, r0, ...
         Type  = 1; 
     end
     radar.Pos = Pos; % 接受天线位置
+    radar.Vel = Vel;
     radar.PosTx = PosTx; % 发射天线位置
     radar.id  = id;  % ID
     radar.M   = M;   % 阵列大小
     radar.r0  = r0;  % 圆半径
+    
+    radar.F   = [1 t 0 0 0 0;
+                  0 1 0 0 0 0;
+                  0 0 1 t 0 0;
+                  0 0 0 1 0 0;
+                  0 0 0 0 1 t;
+                  0 0 0 0 0 1]; % 状态转移方程
+    radar.InitX   = [Pos(1) Vel(1) Pos(2) Vel(2) Pos(3) Vel(3)]; % 目标状态
+    radar.X   = @(dt) [radar.InitX(1) + Vel(1) * dt Vel(1) ...
+                            radar.InitX(3) + Vel(2) * dt Vel(2) ...
+                            radar.InitX(5) + Vel(3) * dt Vel(3)];
     
     % 环境参数
     % 雷达方程 (RCS, lambda:波长)
